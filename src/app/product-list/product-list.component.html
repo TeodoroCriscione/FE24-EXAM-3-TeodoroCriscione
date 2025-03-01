@@ -11,12 +11,10 @@
               <h5 class="card-title">{{ product.name }}</h5>
               <p class="card-text">Brand: {{ product.brand }}</p>
               <p class="card-text">Price: €{{ product.price }}</p>
-              <p class="card-text">Rating: {{ product.rating }} ★</p>
+              <p class="card-text">Rating: {{ getProductRating(product).toFixed(1) }} ★</p>
 
               @if (product.availability){
               <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
-
-              <!-- ✅ Fix: Dynamically set modal ID -->
               <a href="#" class="btn btn-secondary" 
                 data-bs-toggle="modal" 
                 [attr.data-bs-target]="'#DetailsModal'" 

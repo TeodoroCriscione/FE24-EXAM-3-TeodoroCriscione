@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { Product } from '../../product.model';
 import { CartService } from '../../cart.service';
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnChanges, OnInit { 
+export class ProductDetailsComponent implements OnChanges, OnInit, DoCheck { 
   
   @Input() productId: number | null = null;
   product: Product | undefined;
@@ -43,6 +43,17 @@ export class ProductDetailsComponent implements OnChanges, OnInit {
       rating: [5, [Validators.required, Validators.min(1), Validators.max(5)]],
       text: ['', Validators.required],
     });
+
+    if (this.productId !== null) {
+      this.product = this.productService.getProductById(this.productId);
+      this.loadComments();
+    }
+  }
+
+  ngDoCheck(): void {
+    if (this.product && this.averageRating === 0) {
+      this.calculateAverageRating();
+    }
   }
 
   addToCart(product: Product): void {
@@ -80,15 +91,13 @@ export class ProductDetailsComponent implements OnChanges, OnInit {
     if (this.comments.length > 0) {
       const totalRating = this.comments.reduce((sum, comment) => sum + comment.rating, 0);
       this.averageRating = totalRating / this.comments.length;
+    } else if (this.product) {
+      this.averageRating = this.product.rating;
     } else {
       this.averageRating = 0;
     }
-  }
+  }  
 }
-
-
-
-
 
 // By injecting the ActivatedRoute, we are configuring the component to use a service.
 // ngOnInit() is a lifecycle hook in Angular and it is a function that will load every time your component is loaded.

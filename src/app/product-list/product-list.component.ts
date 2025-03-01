@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PRODUCTS } from '../products';
-import { Product } from  '../product.model';
-import { CartService } from  '../cart.service';
+import { Product } from '../product.model';
+import { CartService } from '../cart.service';
 import { ProductService } from '../product.service';
+import { CommentService } from '../comment.service';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import Swal from 'sweetalert2';
 
@@ -12,17 +13,29 @@ declare var bootstrap: any; // Ensure Bootstrap API is available
   imports: [ProductDetailsComponent],
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
   products: Product[] = PRODUCTS;
   selectedProductId!: number | null;
   private modalInstance: any = null;
 
-  constructor(private cartService: CartService, private productService: ProductService) {}
+  constructor(
+    private cartService: CartService, 
+    private productService: ProductService,
+    private commentService: CommentService
+  ) {}
 
   ngOnInit(): void {
     this.products = this.productService.getProducts();
+
+    // Preserve default rating if no comments exist
+    this.products.forEach(product => {
+      const avgRating = this.commentService.getAverageRating(product.id);
+      if (avgRating > 0) {
+        product.rating = avgRating; // Update only if valid rating exists
+      }
+    });
   }
 
   addToCart(product: Product): void {
@@ -31,59 +44,37 @@ export class ProductListComponent {
       title: `${product.name} added to cart!`,
       buttonsStyling: false,
       confirmButtonText: 'Hurray!',
-      customClass: {
-      confirmButton: 'btn btn-primary'},
-      showClass: {
-        popup: `
-          animate__animated
-          animate__fadeInUp
-          animate__faster
-        `
-      },
-      hideClass: {
-        popup: `
-          animate__animated
-          animate__fadeOutDown
-          animate__faster
-        `
-      }
+      customClass: { confirmButton: 'btn btn-primary' },
     });
   }
 
   openDetails(product: Product): void {
     this.selectedProductId = product.id;
-
-    // Ensure Bootstrap's Modal API initializes correctly
     setTimeout(() => {
       const modalElement = document.getElementById('DetailsModal');
       if (modalElement) {
         this.modalInstance = new bootstrap.Modal(modalElement);
         this.modalInstance.show();
-
-        // Listen for when the modal is hidden
-        modalElement.addEventListener('hidden.bs.modal', () => {
-          this.cleanupModal();
-        });
+        modalElement.addEventListener('hidden.bs.modal', () => this.cleanupModal());
       }
-    }, 100); // Small delay ensures Angular updates the view before opening
+    }, 100);
   }
 
-  // Cleanup function to prevent the page from freezing
   cleanupModal(): void {
-    this.selectedProductId = null; // Reset selected product
-    this.removeBackdrop(); // Ensure backdrop is removed
+    this.selectedProductId = null;
+    this.removeBackdrop();
   }
 
-  // Manually remove modal backdrop
   removeBackdrop(): void {
-    const backdrops = document.querySelectorAll('.modal-backdrop');
-    backdrops.forEach(backdrop => backdrop.remove());
-
-    // Ensure body scrolling is restored
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
     document.body.classList.remove('modal-open');
     document.body.style.overflow = 'auto';
   }
-}
 
+  getProductRating(product: Product): number {
+    const avgRating = this.commentService.getAverageRating(product.id);
+    return avgRating > 0 ? avgRating : product.rating; // Preserve default rating
+  }
+}
 
 // We have to create our own property products in the product-list component so we can set it equals to the PRODUCTS constant from our external file.
