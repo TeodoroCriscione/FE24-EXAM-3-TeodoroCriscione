@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex" routerLink="/">
+        <img src="img/store-logo.webp" alt="logo-store" width="50">
+        <h1 class="brand-name">TheStore</h1>
+      </a>
+      <button class="navbar-toggler" type="button"  data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"  aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <div class="menu-wrapper d-flex justify-content-end">
+
+          <!-- 1. list here -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- HOME -->
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" routerLink= "/">Home</a>
+            </li>
+            <!-- ---------- -->
+
+            <!-- ABOUT US -->
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" routerLink= "/about">About Us</a>
+            </li>
+            <!-- ---------- -->
+
+            <!-- Products -->
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" routerLink= "/products-list">Products</a>
+            </li>
+            <!-- ---------- -->
+          </ul>
+          <!-- 1. list here -->
+
+          <!-- 2. MODAL for CART BUTTON -->
+          <button class="nav-link position-relative btn btn-light mx-3 px-3" aria-current="page" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <!-- position-relative -->
+            Your Cart 
+            <img src="img/cart.svg" alt="cart" class="mx-1">
+            <span *ngIf="totalQ > 0" class="cart-badge position-absolute top-50 start-500 translate-middle badge rounded-pill bg-danger">{{ totalQ }}</span>
+            <!-- @if (totalQ != 0){<span class="position-absolute top-50 start-500 translate-middle badge rounded-pill bg-danger">{{totalQ}}</span>} -->
+          </button>
+          <!-- --------------------- -->
+        </div>
+        <!-- --------------------- -->
+
+        <!-- CART MODAL model starts here; remember ID exampleModal-->
+        <div class="modal fade modal-xl" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cart - {{totalQ}} item(s)</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- calling the CART component here -->
+                <app-cart></app-cart>    
+                <!--  ------------------------------ -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- --------------------- -->
+
+      </div>
+    </div>
+</nav>

@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap');
+.hero-section {
+    background: url('https://cdn.pixabay.com/photo/2023/09/11/06/03/building-8246151_1280.jpg') center/cover no-repeat;
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+
+    h1 {
+        font-family: "Lavishly Yours", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+}
+
+.mission-section {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+
+    h2 {
+        font-family: "Lavishly Yours", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+}
+
+.team-section {
+    padding: 60px 20px;
+}
+
+.contact-section {
+    background-color: #343a40;
+    color: white;
+    padding: 60px 20px;
+}
+
+.team-member img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.contact-section a {
+    color: #ffc107;
+    text-decoration: none;
+}

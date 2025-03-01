@@ -1,0 +1,59 @@
+
+<div class="container my-4">
+    <h1>List of Products</h1>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+      <!-- Product Card -->
+      @for (product of products; track product.id) {
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img [src]="'img/' + product.imageUrl" class="card-img-top" [alt]="product.name" height="300">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">Brand: {{ product.brand }}</p>
+              <p class="card-text">Price: €{{ product.price }}</p>
+              <p class="card-text">Rating: {{ product.rating }} ★</p>
+
+              @if (product.availability){
+              <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
+
+              <!-- ✅ Fix: Dynamically set modal ID -->
+              <a href="#" class="btn btn-secondary" 
+                data-bs-toggle="modal" 
+                [attr.data-bs-target]="'#DetailsModal'" 
+                (click)="openDetails(product)">
+                Details
+              </a>
+            } @else {
+              <p style="color: red;">Product not available.</p>
+            }
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Ensure modal exists outside the loop -->
+      <div class="modal fade modal-xl" id="DetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Product Details</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Product ID is passed dynamically now -->
+              <app-product-details [productId]="selectedProductId"></app-product-details> 
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+    </div>  
+</div>
+
+<!-- Note: we could also use string interpolation to do this: routerLink="/details/{{product.id}}" -->
+<!-- [routerLink]="['/details', product.id]"  -->
+<!-- The routerLink directive configures the component template to define how the user navigates to the route or URL. When the user clicks on a details button (link), the app displays the details for that product -->

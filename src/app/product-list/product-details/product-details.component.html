@@ -1,0 +1,76 @@
+@if (product) {
+    <div class="container my-4 text-center">
+      <h1>{{ product.name }}</h1>
+      <img [src]="'img/' + product.imageUrl" [alt]="product.name" class="img-fluid mb-4 w-50">
+      <p><strong>Brand: </strong> {{ product.brand }}</p>
+      <p><strong>Category:</strong> {{ product.category }}</p>
+      <p><strong>Price:</strong> ${{ product.price }}</p>
+
+      <!-- Average Rating -->
+      @if (comments.length > 0) {
+        <div class="text-center my-4">
+          <h4 class="fw-bold">Average Rating: <span class="text-warning">{{ averageRating.toFixed(1) }} ★</span></h4>
+        </div>
+      } @else {
+        <h4 class="fw-bold">Average Rating: <span class="text-warning">{{ product.rating.toFixed(1) }} ★</span></h4>
+      }
+      <!-- -------------- -->
+
+      <p>{{ product.description }}</p>
+      <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
+    </div>
+    <br>
+
+    <!--  Comment Section  -->
+    <div class="container">
+      <h3 class="mb-3">Leave a Comment</h3>
+
+      <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="p-4 border rounded shadow-sm bg-light">
+        <div class="mb-3">
+          <label class="form-label fw-bold">Your Name</label>
+          <input formControlName="name" type="text" class="form-control" placeholder="Enter your name" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Your Email</label>
+          <input formControlName="email" type="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Rating</label>
+          <input formControlName="rating" type="number" class="form-control w-25" min="1" max="5" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Comment</label>
+          <textarea formControlName="text" class="form-control" rows="3" placeholder="Write your comment..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success px-4" [disabled]="commentForm.invalid">
+          <i class="bi bi-send"></i> Submit
+        </button>
+      </form>
+
+      <hr class="my-5">
+
+      <h3 class="mb-3">Comments</h3>
+
+      <div *ngIf="comments.length > 0; else noComments">
+        <div class="list-group">
+          <div *ngFor="let comment of comments" class="list-group-item list-group-item-action flex-column align-items-start p-3 border rounded shadow-sm">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1 text-primary fw-bold">{{ comment.name }}</h5>
+              <small class="text-warning fw-bold">{{ comment.rating }} ★</small>
+            </div>
+            <p class="mb-1 text-muted">{{ comment.text }}</p>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noComments>
+        <p class="text-muted">No comments yet. Be the first to leave one!</p>
+      </ng-template>
+    </div>
+    <!-- -------------- -->
+}  
+  

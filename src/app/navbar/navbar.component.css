@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap');
+.brand-name {
+    text-shadow: 0.1rem 0.1rem 0.2rem black;
+    color: green;
+    font-family: "Lavishly Yours", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+}

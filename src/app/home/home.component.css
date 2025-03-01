@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap');
+
+/* Hero Section Styling */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 50vh; /* Full-screen height */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+/* Video Background Styling */
+.hero video {
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(50%); 
+}
+
+/* Content Styling */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    /* left: 30%; */
+    padding: 1rem;
+
+    background-color: rgba(240, 248, 255, 0.522);
+    /* opacity: 0.5; */
+    box-shadow: 0.5rem 0.5rem 0.5rem aliceblue;
+    border-radius: 5%;
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        text-shadow: 0.2rem 0.2rem 0.2rem black;
+        color: green;
+        font-family: "Lavishly Yours", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    p {
+        font-size: 1.5rem;
+        text-shadow: 0.2rem 0.2rem 0.2rem black;
+        color: green;
+    }
+}
+
+/* Add Overlay */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1); /* Adjust transparency */
+    z-index: -1;
+}
+
+/* --------------------------------------------------------- */
+.short-description {
+    
+    background: linear-gradient(white, aliceblue, white);
+    padding: 5rem;
+    h1, h2 {
+    text-align: center;
+    font-family: "Lavishly Yours", cursive;
+    font-weight: 400;
+    font-style: normal;
+    }
+    div {
+        display: flex;
+        justify-content: space-around;
+        
+        span {
+            font-weight: bold;
+        }
+
+        p {
+            width: 50%;
+        }
+
+        img {
+            width: 40%;
+        }
+    }
+}
+
+/* --------------------------------------------------------- */
+.reasons-hustle {
+    text-align: center;
+    background: linear-gradient(white, aliceblue);
+
+
+    h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    h1 {
+    font-family: "Lavishly Yours", cursive;
+    font-weight: 400;
+    font-style: normal;
+    padding-top: 1rem;
+    margin-bottom: 2rem;
+    }
+
+    dl {
+        display: flex;
+        margin-bottom:0;
+    
+    dt {
+        /* margin: 5rem; */
+        /* padding: 3rem; */
+        width: 55%;
+    }
+
+    span {
+        font-size: 1rem;
+        font-weight: bold;
+         }
+    }
+}
+
+/* --------------------------------------------------------- */
+
+.offers-section{
+    background: linear-gradient(aliceblue, rgb(248, 249, 250));
+    padding-top: 2rem;
+
+    span {
+        font-weight: bold;
+    }
+}
+/* Default (inactive) button styles */
+.nav-pills .nav-link {
+    background-color: aliceblue;
+    color: green !important;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border: 1px solid  gray;
+}
+
+/* Active button styles */
+.nav-pills .nav-link.active {
+    background-color: rgba(0, 128, 0, 0.502) !important;
+    color: black !important;
+    font-weight: bold;
+}
+
+/* Optional: Hover effect */
+.nav-pills .nav-link:hover {
+    background-color: rgba(144, 238, 144, 0.5); /* Slightly lighter brown */
+    /* color: #b30000 !important; */
+}
+
+.tab-content {
+    padding: 20px;
+    border-left: 1px solid #ddd;
+    background-color: rgba(0, 128, 0, 0.502); /* Light beige background */
+}
